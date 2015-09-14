@@ -14,11 +14,21 @@ function onPlay() {
   var player = {
     bombs: 5
   };
-  var nCelebToSpawn = Math.floor(getRandom(0, celebs.length));
-  var challenger = {
-    picture: celebs[nCelebToSpawn].picture,
-    name: celebs[nCelebToSpawn].name
-  };
+  if(friendCache.friends !== undefined
+     && friendCache.friends.length > 0 ) {
+    var randomFriend = Math.floor(getRandom(0, friendCache.friends.length));
+    challenger = {
+      id: friendCache.friends[randomFriend].id.toString(),
+      picture: friendCache.friends[randomFriend].picture.data.url,
+      name: friendCache.friends[randomFriend].first_name
+    };
+  } else {
+    var nCelebToSpawn = Math.floor(getRandom(0, celebs.length));
+    challenger = {
+      picture: celebs[nCelebToSpawn].picture,
+      name: celebs[nCelebToSpawn].name
+    };
+  }
   showStage();
   updateChallenger(challenger);
   initGame(player, challenger, $('#canvas'), updateGameStats, onGameEnd);
